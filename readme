@@ -1,0 +1,26 @@
+Entities:
+
+1. Restaurant
+2. Food
+3. Cart
+4. Order
+5. Payments
+
+Security:
+
+1. Signin
+2. Signup
+
+Roles:
+
+1. Customer
+2. Admin
+
+Environment File:
+
+HOSTNAME = localhost
+PORT = 3000
+USERNAME = 
+PASSWORD = 
+NODE_ENV = development
+MONGODB_ATLAS_DB = 
