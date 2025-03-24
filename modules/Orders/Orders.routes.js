@@ -1,9 +1,35 @@
-const FoodsModel = require("./Foods.model");
+const OrderModel = require("./Orders.model");
 
-
-async function getAllFoods(request, response) {
+async function getAllOrders(request, response) {
     try {
-        const result = await FoodsModel.find();
+        const result = await OrderModel.find().populate([{path: 'user', select: 'name email -_id'}, {path: "restaurant", select: "name -_id"}]).exec();
+        
+        if(result.length < 1) {
+            return response.status(200).json({
+                sucess: true,
+                message: "No Orders found",
+                data: []
+            })
+        } else {
+            return response.status(200).json({
+                sucess: true,
+                message: "Orders fetched successfully",
+                data: result
+            })
+        }
+
+    } catch (error) {
+        return response.status(500).json({
+            sucess: false,
+            error: error.message,
+            message: "Something went wrong"
+        })
+    }
+}
+
+async function getAllOrdersByRestaurantId(request, response) {
+    try {
+        const result = await OrderModel.find();
         
         if(result.length < 1) {
             return response.status(200).json({
@@ -13,7 +39,7 @@ async function getAllFoods(request, response) {
             })
         } else {
             return response.status(200).json({
-                success: true,
+                sucess: true,
                 message: "Foood fetched successfully",
                 data: result
             })
@@ -28,9 +54,9 @@ async function getAllFoods(request, response) {
     }
 }
 
-async function getAFoodById(request, response) {
+async function getAllOrdersByUserId(request, response) {
     try {
-        const result = await FoodsModel.find();
+        const result = await OrderModel.find();
         
         if(result.length < 1) {
             return response.status(200).json({
@@ -55,55 +81,46 @@ async function getAFoodById(request, response) {
     }
 }
 
-async function getAFoodByRestaurantId(request, response) {
+async function getAOrderById(request, response) {
     try {
-        const { restaurantId } = request.params;
+        const result = await OrderModel.find();
+        
+        if(result.length < 1) {
+            return response.status(200).json({
+                sucess: true,
+                message: "No Foood found",
+                data: []
+            })
+        } else {
+            return response.status(200).json({
+                sucess: true,
+                message: "Foood fetched successfully",
+                data: result
+            })
+        }
 
-    if(!restaurantId) {
-        return response.status(400).json({
-            success: false,
-            error: "Missing :restaurantId"
-        })
-    }
-
-    const result = await FoodsModel.find({
-        restaurant: restaurantId
-    })
-
-    if(!result) {
-        return response.status(404).json({
-            success: false,
-            message: "No Foood Found",
-        })
-    } else {
-        return response.status(200).json({
-            success: true,
-            message: "Restaurants fetched successfully",
-            data: result
-        })
-    }
     } catch (error) {
         return response.status(500).json({
-            success: false,
-            message: "Something went wrong",
-            error: error.message
+            sucess: false,
+            error: error.message,
+            message: "Something went wrong"
         })
     }
 }
 
-async function createFood(request, response) {
+async function createOrder(request, response) {
     try {
-        const Restaurant = new FoodsModel(request.body);
+        const Restaurant = new OrderModel(request.body);
         const result = await Restaurant.save();
         if(result._id) {
             return response.status(200).json({
                 success: true,
-                message: "Food created successfully"
+                message: "Order created successfully"
             })
         } else {
             return response.status(500).json({
                 success: true,
-                message: "Food cannot be created"
+                message: "Order cannot be created"
             })
         }
     } catch (error) {
@@ -115,7 +132,7 @@ async function createFood(request, response) {
     }
 }
 
-async function updateFood(request, response) {
+async function updateOrder(request, response) {
     try {
         const { foodId } = request.params;
         if(!foodId) {
@@ -125,7 +142,7 @@ async function updateFood(request, response) {
             })
         }
         
-        const result = await FoodsModel.updateOne({ _id: foodId }, request.body, { new: true });
+        const result = await OrderModel.updateOne({ _id: foodId }, request.body, { new: true });
 
         if(result) {
             return response.status(200).json({
@@ -149,9 +166,9 @@ async function updateFood(request, response) {
     }
 }
 
-function deleteFood(request, response) {
+function deleteOrder(request, response) {
 }
 
 module.exports = {
-    getAllFoods, getAFoodById, getAFoodByRestaurantId, createFood, updateFood, deleteFood
+    getAllOrders, getAllOrdersByRestaurantId, getAllOrdersByUserId, getAOrderById, createOrder, updateOrder, deleteOrder
 };

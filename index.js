@@ -8,6 +8,7 @@ const RestaurantController = require("./modules/Restaurants/Restaurants.controll
 const FoodsController = require("./modules/Foods/Foods.controller");
 const AuthenticationController = require("./modules/Authentication/Authentication.controller");
 const UsersController = require("./modules/users/users.controller");
+const OrdersController = require("./modules/Orders/Orders.controller");
 
 env.config();
 require('./databaseConfig/mongooseConnectionConfig')
@@ -31,6 +32,8 @@ HTTP_SERVER.use('/v1/restaurants', RestaurantController)
 HTTP_SERVER.use('/v1/foods', FoodsController)
 HTTP_SERVER.use('/v1/auth', AuthenticationController)
 HTTP_SERVER.use('/v1/users', UsersController);
+HTTP_SERVER.use('/v1/orders', OrdersController);
+
 
 
 // 3. Start and listen to server
