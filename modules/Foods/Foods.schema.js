@@ -8,7 +8,7 @@ const FoodSchema = mongoose.Schema({
     normalPrice: { type: Number, default: 0 },
     actualPrice: { type: Number, default: 0 },
     isAvailable: { type: Boolean, default: false },
-    restaurant: { type: mongoose.Types.ObjectId, ref: RestaurantModel, required: false }
+    restaurant: { type: mongoose.Types.ObjectId, ref: RestaurantModel, required: true }
 }, { timestamps: true });
 
 module.exports = FoodSchema;

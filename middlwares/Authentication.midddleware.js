@@ -15,7 +15,7 @@ function logRequest(request, response, next) {
  * @param {*} request 
  * @param {*} response 
  * @param {*} next 
- * @returns 
+ * @returns
  */
 async function checkTokenInHeader(request, response, next) {
     try {

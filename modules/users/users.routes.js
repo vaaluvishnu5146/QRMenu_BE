@@ -103,7 +103,14 @@ async function signinUser(request, response) {
             .json({success: false, message: "Bad credentials", error: "Password isn't matching"})
         }
 
-        const token = await createJWTToken({ _id: matchingUser._id, email: matchingUser.email, role: matchingUser.role })
+        const authToken = { _id: matchingUser._id, email: matchingUser.email, role: matchingUser.role};
+
+        // If user is admin then add restaurant id else not
+        if(matchingUser.role === "admin") {
+            authToken['restaurant'] = matchingUser.restaurant;
+        }
+
+        const token = await createJWTToken(authToken)
 
         response.header("Authorization", token);
         

@@ -13,7 +13,7 @@ async function getAllRestaurants(request, response) {
             })
         } else {
             return response.status(200).json({
-                sucess: true,
+                success: true,
                 message: "Restaurants fetched successfully",
                 data: result
             })
