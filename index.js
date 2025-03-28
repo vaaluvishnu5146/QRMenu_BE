@@ -12,6 +12,8 @@ const OrdersController = require("./modules/Orders/Orders.controller");
 
 env.config();
 require('./databaseConfig/mongooseConnectionConfig')
+require('./NotificationConfig/EmailNotificationConfig')
+
 
 // 1. Define configs
 const configs = {
@@ -25,6 +27,7 @@ const HTTP_SERVER = express();
 // Register middleware
 // Enable middlewares
 HTTP_SERVER.use(express.json());
+
 HTTP_SERVER.use(cors());
 
 // Register controller
@@ -33,8 +36,6 @@ HTTP_SERVER.use('/v1/foods', FoodsController)
 HTTP_SERVER.use('/v1/auth', AuthenticationController)
 HTTP_SERVER.use('/v1/users', UsersController);
 HTTP_SERVER.use('/v1/orders', OrdersController);
-
-
 
 // 3. Start and listen to server
 try {

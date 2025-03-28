@@ -78,7 +78,7 @@ async function getAFoodByRestaurantId(request, response) {
     } else {
         return response.status(200).json({
             success: true,
-            message: "Restaurants fetched successfully",
+            message: "Food fetched successfully",
             data: result
         })
     }
